@@ -2,15 +2,18 @@ package at.campus02;
 
 public class BetterMean {
 
-    /* This only works, because double has enough precision to
-     * not lose some digits along the way (and because int is
-     * only 32 bit in Java). A bit brittle, but ok.
+    /* This works, because long has more precision than int and
+     * hence doesn't lose digits along the way. Note that the
+     * final cast back to int cannot overflow as the mean will
+     * never be larger than INT_MAX or smaller than INT_MIN.
      */
     public static int meanWithCasts(int a, int b) {
-        return (int)(((double)a + (double)b) / 2);
+        long result = ((long)a + (long)b) / 2;
+        return (int) result;
     }
 
-    /* First we divide by 2, only then add the numbers.
+    /* A solution without casting:
+     * First we divide by 2, only then add the numbers.
      * Problem: if both numbers are odd, then we'd get a
      * wrong result. Therefore, we check if the numbers are
      * odd (%2 == modulo 2 (Rest nach Division von 2)).
